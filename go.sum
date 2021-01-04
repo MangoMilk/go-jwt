@@ -1,0 +1,8 @@
+github.com/MangoMilk/go-kit v0.0.1 h1:To1e4IRUZtvUpHloqeETXy9vUwziJTStOKSEn2hbA60=
+github.com/MangoMilk/go-kit v0.0.1/go.mod h1:Bwet6LWYhxfU/zg7SOyuEZOxZwRfh9czvMjju+EXZZs=
+github.com/MangoMilk/go-kit v0.0.2 h1:YPmCD9l2DPlOAJKZ8a6VbzjMihDjUwLR+WhrsMbJcSo=
+github.com/MangoMilk/go-kit v0.0.2/go.mod h1:5ut8gReZAs1JhzojAHBROueEIYTv4Yo8c0TudVXZfMM=
+github.com/satori/go.uuid v1.2.0/go.mod h1:dA0hQrYB0VpLJoorglMZABFdXlWrHn1NEOzdhQKdks0=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v2 v2.4.0 h1:D8xgwECY7CYvx+Y2n4sBz93Jn9JRvxdiyyo8CTfuKaY=
+gopkg.in/yaml.v2 v2.4.0/go.mod h1:RDklbk79AGWmwhnvt/jBztapEOGDOx6ZbXqjP6csGnQ=
