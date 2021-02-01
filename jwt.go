@@ -74,7 +74,7 @@ func (p *Payload) SetJti(jti string) {
 	p.Jti = jti
 }
 
-func (p *Payload) toString() string {
+func (p *Payload) ToString() string {
 	p.Addition["iss"] = p.Iss
 	p.Addition["iat"] = p.Iat
 	p.Addition["exp"] = p.Exp
@@ -114,7 +114,7 @@ func (h *Header) SetAlg(alg string) error {
 	return nil
 }
 
-func (h *Header) toString() string {
+func (h *Header) ToString() string {
 	if h.Alg == "" {
 		h.Alg = defaultEncryptType
 	}
@@ -176,10 +176,10 @@ func (token *jwt) generateSign(secret string) (sign string) {
 
 	switch token.Header.Alg {
 	case HS256:
-		sign = encrypt.HmacSHA256(token.Header.toString()+dot+token.Payload.toString(), secret)
+		sign = encrypt.HmacSHA256(token.Header.ToString()+dot+token.Payload.ToString(), secret)
 		break
 	case HS1:
-		sign = encrypt.HmacSHA1(token.Header.toString()+dot+token.Payload.toString(), secret)
+		sign = encrypt.HmacSHA1(token.Header.ToString()+dot+token.Payload.ToString(), secret)
 		break
 	default:
 		sign = ""
@@ -190,7 +190,7 @@ func (token *jwt) generateSign(secret string) (sign string) {
 func (token *jwt) Signature(secret string) error {
 	token.Sign = token.generateSign(secret)
 	if token.Sign == "" {
-		return errors.New(errMsgSignError)
+		return errors.New(errMsgSignError+", please set a encrypt alg first")
 	}
 
 	return nil
@@ -205,7 +205,7 @@ func (token *jwt) VerifySign(secret string) error {
 }
 
 func (token *jwt) Generate() string {
-	return token.Header.toString() + dot + token.Payload.toString() + dot + token.Sign
+	return token.Header.ToString() + dot + token.Payload.ToString() + dot + token.Sign
 }
 
 func (token *jwt) Resolve(jwtToken string) error {
@@ -280,6 +280,6 @@ func (token *jwt) resolveHeader(headerStr string, header *Header) error {
 	return nil
 }
 
-func (token *jwt) toString() string {
-	return token.Header.toString() + dot + token.Payload.toString() + dot + token.Sign
+func (token *jwt) ToString() string {
+	return token.Header.ToString() + dot + token.Payload.ToString() + dot + token.Sign
 }
