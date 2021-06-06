@@ -172,23 +172,27 @@ func (token *jwt) SetHeader(header Header) error {
 }
 
 // process jwt
-func (token *jwt) generateSign(secret string) (sign string) {
+func (token *jwt) generateSign(secret string) (sign string,err error) {
 
 	switch token.Header.Alg {
 	case HS256:
-		sign = encrypt.HmacSHA256(token.Header.ToString()+dot+token.Payload.ToString(), secret)
+		sign,err = encrypt.HmacSHA256(token.Header.ToString()+dot+token.Payload.ToString(), secret)
 		break
 	case HS1:
-		sign = encrypt.HmacSHA1(token.Header.ToString()+dot+token.Payload.ToString(), secret)
+		sign,err = encrypt.HmacSHA1(token.Header.ToString()+dot+token.Payload.ToString(), secret)
 		break
 	default:
 		sign = ""
 	}
+
 	return
 }
 
-func (token *jwt) Signature(secret string) error {
-	token.Sign = token.generateSign(secret)
+func (token *jwt) Signature(secret string) (err error) {
+	token.Sign,err = token.generateSign(secret)
+	if err != nil {
+		return
+	}
 	if token.Sign == "" {
 		return errors.New(errMsgSignError+", please set a encrypt alg first")
 	}
@@ -197,7 +201,11 @@ func (token *jwt) Signature(secret string) error {
 }
 
 func (token *jwt) VerifySign(secret string) error {
-	if token.Sign == "" || token.generateSign(secret) != token.Sign {
+	sign,err:=token.generateSign(secret)
+	if err != nil {
+		return err
+	}
+	if token.Sign == "" || sign != token.Sign  {
 		return errors.New(errMsgSignError)
 	}
 
